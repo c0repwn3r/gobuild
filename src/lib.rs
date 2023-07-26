@@ -276,7 +276,7 @@ impl Build {
             self.println(&format!("cargo:rerun-if-changed={}", file.display()));
         }
 
-        let ccompiler = cc::Build::new().try_get_compiler().map_err(|e| {
+        let ccompiler = cc::Build::new().warnings_into_errors(false).try_get_compiler().map_err(|e| {
             Error::new(
                 ErrorKind::ToolNotFound,
                 &format!("could not find c compiler: {}", e),
