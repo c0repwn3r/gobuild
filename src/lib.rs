@@ -350,7 +350,9 @@ impl Build {
 
     fn get_gnu_lib_name(&self, lib_name: &str) -> String {
         let mut gnu_lib_name = String::with_capacity(5 + lib_name.len());
-        gnu_lib_name.push_str("lib");
+        if cfg!(not(windows)) {
+            gnu_lib_name.push_str("lib");
+        }
         gnu_lib_name.push_str(&lib_name);
 
         match self.buildmode {
