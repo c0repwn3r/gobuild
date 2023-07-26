@@ -354,7 +354,13 @@ impl Build {
         gnu_lib_name.push_str(&lib_name);
 
         match self.buildmode {
-            BuildMode::CArchive => gnu_lib_name.push_str(".a"),
+            BuildMode::CArchive => {
+                if cfg!(windows) {
+                    gnu_lib_name.push_str(".lib")
+                } else {
+                    gnu_lib_name.push_str(".a")
+                }
+            },
             BuildMode::CShared => {
                 if cfg!(windows) {
                     gnu_lib_name.push_str(".dll")
